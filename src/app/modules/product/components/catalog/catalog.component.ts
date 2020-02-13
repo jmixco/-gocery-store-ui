@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { ProductDto } from '../../model/product.model';
 
 @Component({
   selector: 'app-catalog',
