@@ -8,8 +8,10 @@ import {
   NzIconModule,
   NzCardModule,
   NzAvatarModule,
+  NzRateModule,
+  NzEmptyModule,
 } from 'ng-zorro-antd';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProductService } from './services/product.service';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from './components/product-card/product-card.component';
@@ -25,6 +27,7 @@ const services = [ProductService];
   imports: [
     CommonModule,
     ProductRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     NzButtonModule,
     NzInputModule,
@@ -32,6 +35,8 @@ const services = [ProductService];
     NzIconModule,
     NzCardModule,
     NzAvatarModule,
+    NzRateModule,
+    NzEmptyModule,
   ],
   providers: [services],
 })

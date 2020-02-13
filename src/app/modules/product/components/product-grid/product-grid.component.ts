@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['product-grid.component.scss'],
 })
 export class ProductGridComponent {
-  @Input() products: ProductDto[];
+  @Input() products: ProductDto[] = [];
 }
