@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ProductDto } from '../../model/product.model';
 
 @Component({
   selector: 'app-product-grid',
