@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class ProductService {
   constructor(private http: HttpClient) {}
-  requestProducts(): Observable<ProductDto> {
-    return this.http.get<ProductDto>(`${environment.apiUrl}/products`);
+  requestProducts(): Observable<ProductDto[]> {
+    return this.http.get<ProductDto[]>(`${environment.apiUrl}/products`);
   }
 }
