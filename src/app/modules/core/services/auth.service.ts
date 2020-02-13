@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
-import { LoginResponse } from '../models/auth.model';
+import { LoginResponse, TokenBody } from '../models/auth.model';
 import { Observable } from 'rxjs';
 import { SKIP_AUTH } from '../constants/auth.constant';
-
+import * as moment from 'moment';
 @Injectable()
 export class AuthService {
   isAuthenticated = false;
@@ -31,7 +31,7 @@ export class AuthService {
       )
       .pipe(
         tap((response) => {
-          localStorage.setItem(environment.tokenKey, response.token);
+          this.saveToken(response.token);
           this.isAuthenticated = true;
         })
       );
@@ -39,5 +39,32 @@ export class AuthService {
 
   retrieveToken() {
     return localStorage.getItem(environment.tokenKey);
+  }
+  saveToken(token: string) {
+    localStorage.setItem(environment.tokenKey, token);
+  }
+
+  tryToRestoreLogin(): boolean {
+    try {
+      const token = this.retrieveToken();
+      if (token) {
+        const tokenBody = token.split('.')[1];
+        const decodedTokenData: TokenBody = JSON.parse(atob(tokenBody));
+        console.log(decodedTokenData);
+        if (!decodedTokenData.exp) {
+          return this.isAuthenticated;
+        }
+        const expirationDate: moment.Moment = moment(
+          new Date(decodedTokenData.exp * 1000)
+        );
+        if (expirationDate.isBefore(moment())) {
+          return this.isAuthenticated;
+        }
+        this.isAuthenticated = true;
+      }
+    } catch (error) {
+      this.isAuthenticated = false;
+    }
+    return this.isAuthenticated;
   }
 }
