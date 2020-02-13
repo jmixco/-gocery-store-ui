@@ -6,6 +6,7 @@
           <input
             type="text"
             nz-input
+            name="user"
             formControlName="userName"
             placeholder="Username"
           />
@@ -17,6 +18,7 @@
         <nz-input-group nzPrefixIcon="lock">
           <input
             type="password"
+            name="password"
             nz-input
             formControlName="password"
             placeholder="Password"
@@ -32,7 +34,12 @@
         <a class="login-form-forgot" class="login-form-forgot"
           >Forgot password</a
         >
-        <button nz-button class="login-form-button" [nzType]="'primary'">
+        <button
+          nz-button
+          class="login-form-button"
+          [nzType]="'primary'"
+          [nzLoading]="isLoading"
+        >
           Log in
         </button>
         Or
