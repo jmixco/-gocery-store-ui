@@ -29,11 +29,12 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.isLoading = true;
     console.log('submit');
     this.markFormAsDirty();
 
     if (this.form.valid) {
+      this.isLoading = true;
+
       const { userName, password, remember } = this.form.value;
       this.authService.login(userName, password, remember).subscribe(
         (response) => {
@@ -45,6 +46,9 @@ export class LoginComponent implements OnInit {
 
           this.message.error('Failed to Log In');
           console.error(err);
+        },
+        () => {
+          this.isLoading = false;
         }
       );
     }
