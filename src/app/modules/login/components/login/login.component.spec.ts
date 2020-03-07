@@ -79,25 +79,10 @@ describe('LoginComponent', () => {
   it('should render the login form and be connected to the form', fakeAsync(() => {
     const testUser = 'testUser';
     const testPassword = 'testPassword';
-    const componentDebug: DebugElement = fixture.debugElement;
-    component.ngOnInit();
-    fixture.detectChanges();
-    tick();
-    expect(component).toBeTruthy();
 
-    const passwordDe = componentDebug.query(By.css('[name="password"]'));
-    const userDe = componentDebug.query(By.css('[name="user"]'));
-    const passwordEl: HTMLInputElement = passwordDe.nativeElement;
-    const userEl: HTMLInputElement = userDe.nativeElement;
-    expect(passwordDe).toBeTruthy();
-    expect(userDe).toBeTruthy();
+    triggerComponentInit(fixture);
+    fillLoginForm(fixture, testUser, testPassword);
 
-    userEl.value = testUser;
-    passwordEl.value = testPassword;
-    userEl.dispatchEvent(new Event('input'));
-    passwordEl.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-    tick();
     const { userName, password } = component.form.value;
     expect(userName).toBe(testUser);
     expect(password).toBe(testPassword);
@@ -107,26 +92,10 @@ describe('LoginComponent', () => {
     const componentDebug: DebugElement = fixture.debugElement;
     const componentEl: HTMLElement = componentDebug.nativeElement;
 
-    component.ngOnInit();
-    fixture.detectChanges();
-    tick();
-    expect(component).toBeTruthy();
+    triggerComponentInit(fixture);
 
-    const userDe = componentDebug.query(By.css('[name="user"]'));
-    const passwordDe = componentDebug.query(By.css('[name="password"]'));
-    const submitDe = componentDebug.query(By.css('.login-form-button'));
-    const userEl: HTMLInputElement = userDe.nativeElement;
-    const passwordEl: HTMLInputElement = passwordDe.nativeElement;
+    fillLoginForm(fixture, '', '');
 
-    expect(passwordDe).toBeTruthy();
-    expect(userDe).toBeTruthy();
-
-    userEl.value = '';
-    passwordEl.value = '';
-    userEl.dispatchEvent(new Event('input'));
-    passwordEl.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-    tick();
     const componentTemplate = componentEl.textContent;
     expect(componentTemplate.includes('Please input your username!')).toBe(
       true
@@ -134,36 +103,20 @@ describe('LoginComponent', () => {
     expect(componentTemplate.includes('Please input your Password!')).toBe(
       true
     );
+
+    const submitDe = componentDebug.query(By.css('.login-form-button'));
     expect(submitDe.properties.disabled).toBe(true);
   }));
 
-  fit('should call login when submit button is clicked', fakeAsync(() => {
+  it('should call login when submit button is clicked', fakeAsync(() => {
     const testUser = 'testUser';
     const testPassword = 'testPassword';
-    const componentDebug: DebugElement = fixture.debugElement;
-    component.ngOnInit();
-    fixture.detectChanges();
-    tick();
-    expect(component).toBeTruthy();
-
-    const passwordDe = componentDebug.query(By.css('[name="password"]'));
-    const userDe = componentDebug.query(By.css('[name="user"]'));
-    const submitDe = componentDebug.query(By.css('.login-form-button'));
-    const passwordEl: HTMLInputElement = passwordDe.nativeElement;
-    const userEl: HTMLInputElement = userDe.nativeElement;
-    expect(passwordDe).toBeTruthy();
-    expect(userDe).toBeTruthy();
-
-    userEl.value = testUser;
-    passwordEl.value = testPassword;
-    userEl.dispatchEvent(new Event('input'));
-    passwordEl.dispatchEvent(new Event('input'));
     const loginResponse: LoginResponse = { token: 'testToken' };
     authServiceSpy.login.and.returnValue(cold('---x|', { x: loginResponse }));
-    tick();
-    fixture.detectChanges();
-    expect(component.form.valid).toBe(true, 'form should be valid');
-    click(submitDe.nativeElement);
+
+    triggerComponentInit(fixture);
+    fillLoginForm(fixture, testUser, testPassword);
+    sumbitForm(fixture);
 
     expect(component.isLoading).toBe(
       true,
@@ -179,7 +132,7 @@ describe('LoginComponent', () => {
     expect(loginCall.args[0]).toBe(testUser);
     expect(loginCall.args[1]).toBe(testPassword);
 
-    getTestScheduler().flush(); // flush the observables
+    getTestScheduler().flush();
     fixture.detectChanges();
     expect(component.isLoading).toBe(
       false,
@@ -201,4 +154,82 @@ describe('LoginComponent', () => {
       'should navigate to /'
     );
   }));
+
+  it('should display an error when login failed', fakeAsync(() => {
+    const testUser = 'testUser';
+    const testPassword = 'testPassword';
+    const loginResponse: LoginResponse = { token: 'testToken' };
+
+    authServiceSpy.login.and.returnValue(cold('---#|', { x: loginResponse }));
+
+    triggerComponentInit(fixture);
+    fillLoginForm(fixture, testUser, testPassword);
+    sumbitForm(fixture);
+
+    expect(component.isLoading).toBe(
+      true,
+      'spinner should be shown while performing the login'
+    );
+    expect(authServiceSpy.login.calls.count()).toBe(
+      1,
+      'login should be called'
+    );
+
+    getTestScheduler().flush();
+    fixture.detectChanges();
+
+    expect(component.isLoading).toBe(
+      false,
+      'should hide loader after request has finished'
+    );
+    expect(nzMessageSpy.error.calls.count()).toBe(
+      1,
+      'error message should be called'
+    );
+    expect(nzMessageSpy.error.calls.first().args[0]).toBe('Failed to Log In');
+    expect(routerSpy.navigate.calls.count()).toBe(
+      0,
+      'navigate should be called'
+    );
+  }));
 });
+
+function triggerComponentInit(fixture: ComponentFixture<LoginComponent>) {
+  const component = fixture.componentInstance;
+  component.ngOnInit();
+  tick();
+  fixture.detectChanges();
+  expect(component).toBeTruthy();
+}
+
+function fillLoginForm(
+  fixture: ComponentFixture<LoginComponent>,
+  testUser: string,
+  testPassword: string
+) {
+  const component = fixture.componentInstance;
+  const componentDebug: DebugElement = fixture.debugElement;
+  expect(component).toBeTruthy();
+  const passwordDe = componentDebug.query(By.css('[name="password"]'));
+  const userDe = componentDebug.query(By.css('[name="user"]'));
+  const passwordEl: HTMLInputElement = passwordDe.nativeElement;
+  const userEl: HTMLInputElement = userDe.nativeElement;
+  expect(passwordDe).toBeTruthy();
+  expect(userDe).toBeTruthy();
+  userEl.value = testUser;
+  passwordEl.value = testPassword;
+  userEl.dispatchEvent(new Event('input'));
+  passwordEl.dispatchEvent(new Event('input'));
+  tick();
+  fixture.detectChanges();
+}
+
+function sumbitForm(fixture: ComponentFixture<LoginComponent>) {
+  const component = fixture.componentInstance;
+  const componentDebug: DebugElement = fixture.debugElement;
+
+  const submitDe = componentDebug.query(By.css('.login-form-button'));
+
+  expect(component.form.valid).toBe(true, 'form should be valid');
+  click(submitDe.nativeElement);
+}
