@@ -100,7 +100,7 @@ describe('LoginComponent', () => {
     expect(password).toBe(testPassword);
   }));
 
-  fit('should render form validation messages when controls are not valid', fakeAsync(() => {
+  it('should render form validation messages when controls are not valid', fakeAsync(() => {
     const componentDebug: DebugElement = fixture.debugElement;
     const componentEl: HTMLElement = componentDebug.nativeElement;
 
