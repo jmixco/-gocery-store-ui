@@ -20,6 +20,9 @@ import { IconsProviderModule } from 'src/app/icons-provider.module';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginResponse } from 'src/app/modules/core/models/auth.model';
+import { click } from 'src/test-helpers/click-helper';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -132,5 +135,70 @@ describe('LoginComponent', () => {
       true
     );
     expect(submitDe.properties.disabled).toBe(true);
+  }));
+
+  fit('should call login when submit button is clicked', fakeAsync(() => {
+    const testUser = 'testUser';
+    const testPassword = 'testPassword';
+    const componentDebug: DebugElement = fixture.debugElement;
+    component.ngOnInit();
+    fixture.detectChanges();
+    tick();
+    expect(component).toBeTruthy();
+
+    const passwordDe = componentDebug.query(By.css('[name="password"]'));
+    const userDe = componentDebug.query(By.css('[name="user"]'));
+    const submitDe = componentDebug.query(By.css('.login-form-button'));
+    const passwordEl: HTMLInputElement = passwordDe.nativeElement;
+    const userEl: HTMLInputElement = userDe.nativeElement;
+    expect(passwordDe).toBeTruthy();
+    expect(userDe).toBeTruthy();
+
+    userEl.value = testUser;
+    passwordEl.value = testPassword;
+    userEl.dispatchEvent(new Event('input'));
+    passwordEl.dispatchEvent(new Event('input'));
+    const loginResponse: LoginResponse = { token: 'testToken' };
+    authServiceSpy.login.and.returnValue(cold('---x|', { x: loginResponse }));
+    tick();
+    fixture.detectChanges();
+    expect(component.form.valid).toBe(true, 'form should be valid');
+    click(submitDe.nativeElement);
+
+    expect(component.isLoading).toBe(
+      true,
+      'spinner should be shown while performing the login'
+    );
+    expect(authServiceSpy.login.calls.count()).toBe(
+      1,
+      'login should be called'
+    );
+
+    const loginSpy = authServiceSpy.login;
+    const loginCall = loginSpy.calls.first();
+    expect(loginCall.args[0]).toBe(testUser);
+    expect(loginCall.args[1]).toBe(testPassword);
+
+    getTestScheduler().flush(); // flush the observables
+    fixture.detectChanges();
+    expect(component.isLoading).toBe(
+      false,
+      'should hide loader after request has finished'
+    );
+    expect(nzMessageSpy.success.calls.count()).toBe(
+      1,
+      'success message should be called'
+    );
+    expect(nzMessageSpy.success.calls.first().args[0]).toBe(
+      'Sucessfully Logged In'
+    );
+    expect(routerSpy.navigate.calls.count()).toBe(
+      1,
+      'navigate should be called'
+    );
+    expect(routerSpy.navigate.calls.first().args[0]).toEqual(
+      ['/'],
+      'should navigate to /'
+    );
   }));
 });
