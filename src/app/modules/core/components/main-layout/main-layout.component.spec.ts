@@ -10,22 +10,22 @@ describe('MainLayoutComponent', () => {
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(MainLayoutComponent);
-    const app = fixture.debugElement.componentInstance;
+    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'grocery-store-ui'`, () => {
+  it(`should be expanded by default'`, () => {
     const fixture = TestBed.createComponent(MainLayoutComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('grocery-store-ui');
+    const app = fixture.componentInstance;
+    expect(app.isCollapsed).toBe(false);
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(MainLayoutComponent);
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
+    const compiled = fixture.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain(
-      'Welcome to grocery-store-ui!'
+      'Ant Design Of Angular'
     );
   });
 });
