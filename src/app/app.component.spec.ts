@@ -1,31 +1,37 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from './modules/core/services/auth.service';
 
 describe('AppComponent', () => {
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let routerSpy: jasmine.SpyObj<Router>;
+
   beforeEach(async(() => {
+    authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', [
+      'login',
+      'retrieveToken',
+      'saveToken',
+      'tryToRestoreLogin',
+    ]);
+    routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
+
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
+      declarations: [AppComponent],
+      providers: [
+        { provide: Router, useValue: routerSpy },
+        {
+          provide: AuthService,
+          useValue: authServiceSpy,
+        },
       ],
     }).compileComponents();
   }));
 
   it('should create the app', () => {
+    authServiceSpy.tryToRestoreLogin.and.returnValue(true);
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'grocery-store-ui'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('grocery-store-ui');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to grocery-store-ui!');
   });
 });

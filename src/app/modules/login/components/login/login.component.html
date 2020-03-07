@@ -39,6 +39,7 @@
           class="login-form-button"
           [nzType]="'primary'"
           [nzLoading]="isLoading"
+          [disabled]="form.invalid"
         >
           Log in
         </button>
