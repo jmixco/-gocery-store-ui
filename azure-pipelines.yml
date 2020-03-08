@@ -26,10 +26,12 @@ steps:
     command: custom
     customCommand: run build -- --prod
     workingDir: src
+
 - task: PublishPipelineArtifact@0
     inputs:
       artifactName: 'angular'
       targetPath: 'src/dist'
+
 - script: |
     npm run test-headless
   displayName: 'run test-headless'
