@@ -1,5 +1,7 @@
 # GroceryStoreUi
 
+[![Build Status](https://dev.azure.com/juliomixco-dev/grocery-store-ui/_apis/build/status/juliomixco.gocery-store-ui?branchName=master)](https://dev.azure.com/juliomixco-dev/grocery-store-ui/_build/latest?definitionId=1&branchName=master)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.2.
 
 ## Development server
