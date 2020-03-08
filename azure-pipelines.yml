@@ -55,10 +55,9 @@ steps:
       testResultsFormat: JUnit
       testResultsFiles: '**/TESTS*.xml'
 
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(System.DefaultWorkingDirectory)'
 
   - task: Npm@1
     displayName: 'Lint Angular'
