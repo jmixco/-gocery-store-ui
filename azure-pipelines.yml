@@ -30,8 +30,7 @@ steps:
     displayName: 'Build Angular'
     inputs:
       command: custom
-      customCommand: run build 
-
+      customCommand: run build
 
   - script: |
       npm run test-headless
@@ -59,11 +58,14 @@ steps:
     inputs:
       SourceFolder: '$(System.DefaultWorkingDirectory)'
       Contents: |
-        dist
+        dist/**
         package.json
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: AngularBuild
 
   - task: Npm@1
     displayName: 'Lint Angular'
