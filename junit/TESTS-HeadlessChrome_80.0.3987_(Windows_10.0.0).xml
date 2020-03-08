@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<testsuite name="HeadlessChrome 80.0.3987 (Windows 10.0.0)" package="" timestamp="2020-03-08T04:29:30" id="0" hostname="JMIXCO" tests="11" errors="0" failures="0" time="0.454">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/80.0.3987.132 Safari/537.36"/>
+  </properties>
+  <testcase name="MainLayoutComponent should render title in a h1 tag" time="0.08" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).MainLayoutComponent"/>
+  <testcase name="MainLayoutComponent should be expanded by default'" time="0.026" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).MainLayoutComponent"/>
+  <testcase name="MainLayoutComponent should create the app" time="0.023" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).MainLayoutComponent"/>
+  <testcase name="LoginComponent should call login when submit button is clicked" time="0.13" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).LoginComponent"/>
+  <testcase name="LoginComponent should render form validation messages when controls are not valid" time="0.058" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).LoginComponent"/>
+  <testcase name="LoginComponent should display an error when login failed" time="0.05" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).LoginComponent"/>
+  <testcase name="LoginComponent should render the login form and be connected to the form" time="0.039" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).LoginComponent"/>
+  <testcase name="LoginComponent should compile" time="0.018" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).LoginComponent"/>
+  <testcase name="AppComponent should navigate to login if sesion was not restored" time="0.011" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).AppComponent"/>
+  <testcase name="AppComponent should create the app" time="0.008" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).AppComponent"/>
+  <testcase name="AppComponent should not navigate if sesion was restored" time="0.011" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).AppComponent"/>
+  <system-out>
+    <![CDATA[HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-layout' is not a known element:
+1. If 'nz-layout' is an Angular component, then verify that it is part of this module.
+2. If 'nz-layout' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-sider' is not a known element:
+1. If 'nz-sider' is an Angular component, then verify that it is part of this module.
+2. If 'nz-sider' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-layout' is not a known element:
+1. If 'nz-layout' is an Angular component, then verify that it is part of this module.
+2. If 'nz-layout' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-header' is not a known element:
+1. If 'nz-header' is an Angular component, then verify that it is part of this module.
+2. If 'nz-header' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-content' is not a known element:
+1. If 'nz-content' is an Angular component, then verify that it is part of this module.
+2. If 'nz-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Can't bind to 'nzCollapsed' since it isn't a known property of 'nz-sider'.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Can't bind to 'nzTrigger' since it isn't a known property of 'nz-sider'.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Can't bind to 'nzInlineCollapsed' since it isn't a known property of 'ul'.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Can't bind to 'nzType' since it isn't a known property of 'i'.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-layout' is not a known element:
+1. If 'nz-layout' is an Angular component, then verify that it is part of this module.
+2. If 'nz-layout' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-sider' is not a known element:
+1. If 'nz-sider' is an Angular component, then verify that it is part of this module.
+2. If 'nz-sider' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-layout' is not a known element:
+1. If 'nz-layout' is an Angular component, then verify that it is part of this module.
+2. If 'nz-layout' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-header' is not a known element:
+1. If 'nz-header' is an Angular component, then verify that it is part of this module.
+2. If 'nz-header' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-content' is not a known element:
+1. If 'nz-content' is an Angular component, then verify that it is part of this module.
+2. If 'nz-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-layout' is not a known element:
+1. If 'nz-layout' is an Angular component, then verify that it is part of this module.
+2. If 'nz-layout' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-sider' is not a known element:
+1. If 'nz-sider' is an Angular component, then verify that it is part of this module.
+2. If 'nz-sider' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-layout' is not a known element:
+1. If 'nz-layout' is an Angular component, then verify that it is part of this module.
+2. If 'nz-layout' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-header' is not a known element:
+1. If 'nz-header' is an Angular component, then verify that it is part of this module.
+2. If 'nz-header' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''nz-content' is not a known element:
+1. If 'nz-content' is an Angular component, then verify that it is part of this module.
+2. If 'nz-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'submit'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'submit'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) ERROR: 'error'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: ''router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>
