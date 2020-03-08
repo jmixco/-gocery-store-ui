@@ -1,0 +1,36 @@
+<nz-card
+  style="product-card-container"
+  [nzCover]="coverTemplate"
+  [nzActions]="[actionSetting]"
+>
+  <nz-card-meta
+    [nzTitle]="product.name"
+    [nzDescription]="descriptionTemplate"
+  ></nz-card-meta>
+</nz-card>
+
+<ng-template #coverTemplate>
+  <img class="product-picture" alt="example" [src]="product.imageUrl" />
+</ng-template>
+<ng-template #actionSetting>
+  <i nz-icon nzType="shopping-cart"></i>
+</ng-template>
+<ng-template #actionEdit>
+  <i nz-icon nzType="edit"></i>
+</ng-template>
+<ng-template #actionEllipsis>
+  <i nz-icon nzType="ellipsis"></i>
+</ng-template>
+
+<ng-template #descriptionTemplate>
+  <div>
+    {{ product.description }}
+    <br />
+    $20.99
+    <br />
+    <nz-rate [ngModel]="2.5" nzDisabled></nz-rate>
+    <span class="count">(23)</span>
+    <br />
+    <span class="count">200 Sales</span>
+  </div>
+</ng-template>

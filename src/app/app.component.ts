@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
+import { AuthService } from './modules/core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'grocery-store-ui';
+  constructor(private authService: AuthService, private router: Router) {
+    if (!this.authService.tryToRestoreLogin()) {
+      this.router.navigate(['/auth/login']);
+    }
+  }
 }
