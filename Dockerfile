@@ -1,5 +1,6 @@
 FROM node:12.18.3-alpine AS build-env
 WORKDIR /usr/src/app
+RUN npm install -g @angular/cli
 # Copy package.json and restore as distinct layers
 COPY package.json package-lock.json ./
 RUN npm install
