@@ -4,7 +4,7 @@ services:
 
 stages:
   - build
-  - test
+  #- test
   - release
   - deploy
 
@@ -96,6 +96,10 @@ deploy:develop:
   stage: deploy
   script:
     ## Connect to the Digital Ocean droplet, stop/remove all running containers, pull latest image and execute it.
+    ## execute the following commands in the droplet
+    ### docker login -u $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD $CI_REGISTRY;
+    ### docker ps -q --filter "name=${DOCKER_CONTAINER_NAME}" | grep -q . && docker stop ${DOCKER_CONTAINER_NAME} && docker rm -fv ${DOCKER_CONTAINER_NAME} && docker rmi -f ${RELEASE_BRANCH_IMAGE};
+    ### docker run -d -p 80:80 --name ${DOCKER_CONTAINER_NAME} ${RELEASE_BRANCH_IMAGE};
     - ssh -T ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker login -u $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD $CI_REGISTRY; docker ps -q --filter "name=${DOCKER_CONTAINER_NAME}" | grep -q . && docker stop ${DOCKER_CONTAINER_NAME} && docker rm -fv ${DOCKER_CONTAINER_NAME} && docker rmi -f ${RELEASE_BRANCH_IMAGE}; docker run -d -p 80:80 --name ${DOCKER_CONTAINER_NAME} ${RELEASE_BRANCH_IMAGE}"
 
     # Everything works, exit.
