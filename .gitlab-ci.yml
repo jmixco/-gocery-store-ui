@@ -29,7 +29,6 @@ before_script:
   - eval $(ssh-agent -s)
 
   ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
-  - echo "${SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY}"
   - echo "${SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY}" | ssh-add -
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
@@ -46,7 +45,7 @@ build:
   script:
     - echo $BRANCH_NAME
     - echo $TEST_IMAGE
-    - docker build --pull -t $TEST_IMAGE . || code=$?; if [ $code -eq 125 ]; then docker build -t $TEST_IMAGE .; echo "success"; else echo $code;  fi
+    - docker build --pull -t $TEST_IMAGE .
     - docker push $TEST_IMAGE
     - touch $CI_PROJECT_DIR/success
   # after_script:
