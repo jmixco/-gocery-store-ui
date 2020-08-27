@@ -4,9 +4,9 @@ services:
 
 stages:
   - build
-  #- test
   - release
   - deploy
+  #- test
 
 # image names should be prefixed with registry.gitlab.com
 # you can take a look at the default CI variables here https://docs.gitlab.com/ee/ci/variables/
