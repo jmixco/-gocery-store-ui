@@ -6,3 +6,5 @@ dist
 .gitlab-ci.yml
 README.md
 .editorconfig
+junit
+coverage

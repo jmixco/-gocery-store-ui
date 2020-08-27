@@ -31,6 +31,7 @@ Recources:
 - [Getting started with GitLab CI/CD](https://gitlab.com/help/ci/quick_start/README)
 - [initial-server-setup-with-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
 - [deploy-a-node-app-to-digital-ocean-via-gitlab-runners](https://medium.com/@codeandcam/deploy-a-node-app-to-digital-ocean-via-gitlab-runners-70bc8f81f91e)
+- [como-instalar-y-usar-docker-en-ubuntu-18-04-1-es](https://www.digitalocean.com/community/tutorials/como-instalar-y-usar-docker-en-ubuntu-18-04-1-es)
 </details>
 
 ## CLI documentation

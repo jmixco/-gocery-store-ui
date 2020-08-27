@@ -1,12 +1,12 @@
-image: docker:latest
+image: node:lts-buster
 services:
   - docker:dind
 
 stages:
   - build
+  - test
   - release
   - deploy
-  # - test
 
 # image names should be prefixed with registry.gitlab.com
 # you can take a look at the default CI variables here https://docs.gitlab.com/ee/ci/variables/
@@ -62,11 +62,15 @@ build:
     - develop
     - /^release/.*$/
 
-# test:
-#   stage: test
-#   script:
-#     - docker pull $TEST_IMAGE
-#     - docker run $TEST_IMAGE npm test
+test:
+  stage: test
+  script:
+    - npm install
+    - npm run test-headless
+  artifacts:
+    reports:
+      cobertura: ./coverage/grocery-store-ui/cobertura-coverage.xml
+      junit: '**/TESTS*.xml'
 
 release:develop:
   stage: release
