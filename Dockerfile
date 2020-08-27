@@ -7,7 +7,7 @@ RUN npm install
 
 # Copy everything else and build
 COPY . .
-RUN npm run build
+# RUN npm run build
 
 RUN npm run test-headless
 
