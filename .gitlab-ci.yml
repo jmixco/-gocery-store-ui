@@ -1,0 +1,100 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:
+  - build
+  - release
+  - deploy
+  # - test
+
+# image names should be prefixed with registry.gitlab.com
+# you can take a look at the default CI variables here https://docs.gitlab.com/ee/ci/variables/
+# CI_REGISTRY_IMAGE: is the combination of CI_REGISTRY + CI_PROJECT_PATH and outputs like: "registry.example.com/<your org or username>/<your projetc>"
+# CI_COMMIT_REF_SLUG: replaces any slash with a dash in your branch's name
+variables:
+  BRANCH_NAME: $CI_COMMIT_REF_NAME
+  DOCKER_CONTAINER_NAME: $CI_PROJECT_NAME
+  TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+  RELEASE_BRANCH_IMAGE: $CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_latest
+  # make sure you set up the following variables in your repo > Settings > CI / CD > Variables
+  # SECRETS_DIGITAL_OCEAN_DROPLET_IP: your droplet's IP
+  # SECRETS_DIGITAL_OCEAN_DROPLET_USER: your ssh user EX: root
+  # SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY: your private ssh key (shouldn't have a passphrase) and the public key should be allowed in your droplet
+
+before_script:
+  ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+  - apk update && apk add openssh-client
+  - eval $(ssh-agent -s)
+
+  ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+  - echo "${SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY}"
+  - echo "${SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY}" | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
+  ## Make sure that ssh will trust the new host, instead of asking
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+  ## Test that everything is setup correctly
+  - ssh -T ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP}
+  - docker login -u $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build:
+  stage: build
+  script:
+    - echo $BRANCH_NAME
+    - echo $TEST_IMAGE
+    - docker build --pull -t $TEST_IMAGE . || code=$?; if [ $code -eq 125 ]; then docker build -t $TEST_IMAGE .; echo "success"; else echo $code;  fi
+    - docker push $TEST_IMAGE
+    - touch $CI_PROJECT_DIR/success
+  # after_script:
+  #   - |
+  #     if [ -e success ]; then
+  #       echo on success
+  #     else
+  #       echo on failure
+  #       - docker build -t $TEST_IMAGE .
+  #       - docker push $TEST_IMAGE
+  #     fi
+
+  only:
+    - develop
+    - /^release/.*$/
+
+# test:
+#   stage: test
+#   script:
+#     - docker pull $TEST_IMAGE
+#     - docker run $TEST_IMAGE npm test
+
+release:develop:
+  stage: release
+  script:
+    - docker pull $TEST_IMAGE
+    - docker tag $TEST_IMAGE $RELEASE_BRANCH_IMAGE
+    - docker push $RELEASE_BRANCH_IMAGE
+  only:
+    - develop
+
+release:
+  stage: release
+  script:
+    - docker pull $TEST_IMAGE
+    - docker tag $TEST_IMAGE $RELEASE_IMAGE
+    - docker push $RELEASE_IMAGE
+  only:
+    - /^release/.*$/
+
+deploy:develop:
+  stage: deploy
+  script:
+    ## Connect to the Digital Ocean droplet, stop/remove all running containers, pull latest image and execute it.
+    - ssh -T ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker login -u $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD $CI_REGISTRY; docker ps -q --filter "name=${DOCKER_CONTAINER_NAME}" | grep -q . && docker stop ${DOCKER_CONTAINER_NAME} && docker rm -fv ${DOCKER_CONTAINER_NAME} && docker rmi -f ${RELEASE_BRANCH_IMAGE}; docker run -d -p 80:80 --name ${DOCKER_CONTAINER_NAME} ${RELEASE_BRANCH_IMAGE}"
+
+    # Everything works, exit.
+    - exit 0
+  only:
+    - develop
+  needs: ['release:develop']

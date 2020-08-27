@@ -1,0 +1,8 @@
+.git
+node_modules
+bin
+build
+dist
+.gitlab-ci.yml
+README.md
+.editorconfig
