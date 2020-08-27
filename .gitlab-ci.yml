@@ -1,4 +1,4 @@
-image: node:lts-buster
+image: docker:latest
 services:
   - docker:dind
 
@@ -65,8 +65,10 @@ build:
 test:
   stage: test
   script:
-    - npm install
-    - npm run test-headless
+    - 'docker create --name testimage ${TEST_IMAGE}'
+    - docker cp testimage:/usr/test-reports/ .
+    - docker rm -f -v testimage
+
   artifacts:
     reports:
       cobertura: ./coverage/grocery-store-ui/cobertura-coverage.xml

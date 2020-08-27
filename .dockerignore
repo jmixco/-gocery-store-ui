@@ -8,3 +8,4 @@ README.md
 .editorconfig
 junit
 coverage
+report.*.json

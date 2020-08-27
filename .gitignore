@@ -48,3 +48,4 @@ Thumbs.db
 #testfiles
 junit
 coverage
+report.*.json
