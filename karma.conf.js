@@ -32,6 +32,12 @@ module.exports = function (config) {
     autoWatch: true,
     // browsers: ['ChromeHeadless'],
     browsers: ['Chrome'],
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--disable-web-security', '--disable-gpu', '--no-sandbox'],
+      },
+    },
     singleRun: false,
     restartOnFileChange: true,
   });

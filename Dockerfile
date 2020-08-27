@@ -1,4 +1,5 @@
-FROM node:12.18.3-alpine AS build-env
+#FROM node:12.18.3-alpine AS build-env
+FROM rastasheep/alpine-node-chromium:12-alpine AS base
 WORKDIR /usr/src/app
 #RUN npm install -g @angular/cli
 # Copy package.json and restore as distinct layers
@@ -9,7 +10,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-#RUN npm run test-headless
+RUN npm run test-headless
 
 # Build runtime image
 FROM nginx:1.13.9-alpine
@@ -18,7 +19,7 @@ RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
 
 COPY --from=build-env /usr/src/app/dist/grocery-store-ui /usr/share/nginx/html
-#COPY --from=build-env /usr/src/app/junit /usr/test-reports/junit
-#COPY --from=build-env /usr/src/app/coverage /usr/test-reports/coverage
+COPY --from=build-env /usr/src/app/junit /usr/test-reports/junit
+COPY --from=build-env /usr/src/app/coverage /usr/test-reports/coverage
 
 # file path conf/conf.d/default.conf
