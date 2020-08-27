@@ -14,6 +14,6 @@ FROM nginx:1.13.9-alpine
 RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
 
-COPY --from=build-env /usr/src/app/dist/baypay-stores-panel-web /usr/share/nginx/html
+COPY --from=build-env /usr/src/app/dist/grocery-store-ui /usr/share/nginx/html
 
 # file path conf/conf.d/default.conf
