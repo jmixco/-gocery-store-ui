@@ -4,9 +4,9 @@ services:
 
 stages:
   - build
+  - test
   - release
   - deploy
-  # - test
 
 # image names should be prefixed with registry.gitlab.com
 # you can take a look at the default CI variables here https://docs.gitlab.com/ee/ci/variables/
@@ -62,17 +62,17 @@ build:
     - develop
     - /^release/.*$/
 
-# test:
-#   stage: test
-#   script:
-#     - 'docker create --name testimage ${TEST_IMAGE}'
-#     - docker cp testimage:/usr/test-reports/ .
-#     - docker rm -f -v testimage
+test:
+  stage: test
+  script:
+    - 'docker create --name testimage ${TEST_IMAGE}'
+    - docker cp testimage:/usr/test-reports/ .
+    - docker rm -f -v testimage
 
-#   artifacts:
-#     reports:
-#       cobertura: ./coverage/grocery-store-ui/cobertura-coverage.xml
-#       junit: '**/TESTS*.xml'
+  artifacts:
+    reports:
+      cobertura: ./coverage/grocery-store-ui/cobertura-coverage.xml
+      junit: '**/TESTS*.xml'
 
 release:develop:
   stage: release
