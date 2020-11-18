@@ -1,0 +1,37 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'test-headless' ]
+2 info using npm@6.14.6
+3 info using node@v12.18.3
+4 verbose run-script [ 'pretest-headless', 'test-headless', 'posttest-headless' ]
+5 info lifecycle grocery-store-ui@0.0.0~pretest-headless: grocery-store-ui@0.0.0
+6 info lifecycle grocery-store-ui@0.0.0~test-headless: grocery-store-ui@0.0.0
+7 verbose lifecycle grocery-store-ui@0.0.0~test-headless: unsafe-perm in lifecycle true
+8 verbose lifecycle grocery-store-ui@0.0.0~test-headless: PATH: /usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/usr/src/app/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+9 verbose lifecycle grocery-store-ui@0.0.0~test-headless: CWD: /usr/src/app
+10 silly lifecycle grocery-store-ui@0.0.0~test-headless: Args: [
+10 silly lifecycle   '-c',
+10 silly lifecycle   'ng test --watch=false --browsers=ChromeHeadless --code-coverage'
+10 silly lifecycle ]
+11 silly lifecycle grocery-store-ui@0.0.0~test-headless: Returned: code: 1  signal: null
+12 info lifecycle grocery-store-ui@0.0.0~test-headless: Failed to exec test-headless script
+13 verbose stack Error: grocery-store-ui@0.0.0 test-headless: `ng test --watch=false --browsers=ChromeHeadless --code-coverage`
+13 verbose stack Exit status 1
+13 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/index.js:332:16)
+13 verbose stack     at EventEmitter.emit (events.js:315:20)
+13 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/lib/spawn.js:55:14)
+13 verbose stack     at ChildProcess.emit (events.js:315:20)
+13 verbose stack     at maybeClose (internal/child_process.js:1021:16)
+13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:286:5)
+14 verbose pkgid grocery-store-ui@0.0.0
+15 verbose cwd /usr/src/app
+16 verbose Linux 4.19.76-linuxkit
+17 verbose argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "test-headless"
+18 verbose node v12.18.3
+19 verbose npm  v6.14.6
+20 error code ELIFECYCLE
+21 error errno 1
+22 error grocery-store-ui@0.0.0 test-headless: `ng test --watch=false --browsers=ChromeHeadless --code-coverage`
+22 error Exit status 1
+23 error Failed at the grocery-store-ui@0.0.0 test-headless script.
+23 error This is probably not a problem with npm. There is likely additional logging output above.
+24 verbose exit [ 1, true ]
